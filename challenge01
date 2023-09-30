@@ -1,0 +1,59 @@
+class ProductManager {
+
+
+    constructor() {
+        this.products = []
+        this.id = 0 //inicializo el id en cero
+    }
+
+    addProduct = ({ title, price, description, code ,thumbnail,stock}) => {
+        if (this.products.some(prod => prod.code === Number(code))) return
+        if ( (!title )|| (!price) || (!description) || (!code) || (!thumbnail) && stock > -1 ) return  //el stock mayo a menos uno, es por que si pongo (!stock) el cero lo toma como true
+        this.id++
+        this.products.push({
+            title: title,
+            price: price,
+            description: description,
+            thumbnail: thumbnail,
+            code: code,
+            id: this.id
+        })
+    }
+    getProduct = () =>{
+        return this.products
+    }
+    getProductByid = (id) =>{
+        const filter = this.products.find(prod => prod.id  === Number(id))
+        if(filter) return
+        else console.error("Not, found")
+    }
+}
+const productManager = new ProductManager()
+
+productManager.addProduct({
+    code: 1001,
+    title: "cerveza",
+    price: 1500,
+    description: "cerveza nueva",
+    thumbnail: "https://www.cualquiercosa.com",
+    stock: 10
+})
+
+productManager.addProduct({
+    code: 1002,
+    title: "Fernet",
+    price: 4000,
+    description: "Fernet Branca",
+    thumbnail: "https://www.otracosa.com",
+    stock: 10
+})
+console.log("---------------------------------------")
+console.log("Llamo a getProductByid le paso un id incorrecto: ")
+productManager.getProductByid(3)   //Le paso un id no valido para que de el error
+console.log("---------------------------------------")
+console.log("Llamo a getProductByid le paso un id que existe en el arreglo: ")
+productManager.getProductByid(2)    //Llamo un id , que existe en el arreglo, en la consigna no dice que haga nada con esto, asi que solo retorno.
+console.log("No hace nada por que existe, mas adelante supongo que tendremos que incrementar el stock")
+console.log("---------------------------------------")
+console.log("LLamo al arreglo de productos: ")
+console.log(productManager.getProduct()) // llamo a todos los productos
