@@ -8,7 +8,7 @@ class ProductManager {
 
     addProduct = ({ title, price, description, code ,thumbnail,stock}) => {
         if (this.products.some(prod => prod.code === Number(code))) return
-        if ( (!title )|| (!price) || (!description) || (!code) || (!thumbnail) && stock > -1 ) return  //el stock mayo a menos uno, es por que si pongo (!stock) el cero lo toma como true
+        if ( (!title || typeof(title) !== 'string' )|| (!price || typeof(price) !== 'number') || (!description || typeof(description) !== 'string') || (!code || typeof(code) !== 'number') || (!thumbnail || typeof(thumbnail) !== 'string') || (stock < 0 || typeof(stock) !== 'number' ) ) return  //el stock mayo a menos uno, es por que si pongo (!stock) el cero lo toma como true
         this.id++
         this.products.push({
             title: title,
@@ -16,6 +16,7 @@ class ProductManager {
             description: description,
             thumbnail: thumbnail,
             code: code,
+            stock: stock,
             id: this.id
         })
     }
@@ -34,7 +35,7 @@ productManager.addProduct({
     code: 1001,
     title: "cerveza",
     price: 1500,
-    description: "cerveza nueva",
+    description: "cerveza negra",
     thumbnail: "https://www.cualquiercosa.com",
     stock: 10
 })
